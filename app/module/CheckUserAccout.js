@@ -31,6 +31,7 @@ export async function CheckUserAccount(email) {
       };
     }
   } catch (error) {
-    return { success: false, msg: "some Internal  issue" };
+    console.error(error); // Log the error for debugging
+    throw error; // Rethrow the error for external handling
   }
 }

@@ -50,5 +50,5 @@ export default async function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/", "/login", "/register", "/dashboard", "/profile", "/settings"], // Adjust to match protected/auth routes
+  matcher: ["/dashboard", "/profile", "/settings"], // Adjust to match protected/auth routes
 };
