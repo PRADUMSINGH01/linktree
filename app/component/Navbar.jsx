@@ -12,8 +12,8 @@ export default function Navbar() {
   const handleMenuToggle = () => setMenuOpen((prev) => !prev);
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+    <header className="bg-white dark:bg-gray-900 shadow-md ">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center ">
         {/* Logo */}
         <Link
           href="/"
@@ -33,8 +33,8 @@ export default function Navbar() {
         {/* Navbar Links */}
         <nav
           className={`${
-            menuOpen ? "block" : "hidden"
-          } lg:flex lg:items-center space-y-4 lg:space-y-0 lg:space-x-6 mt-4 lg:mt-0`}
+            menuOpen ? "flex" : "hidden"
+          } flex-col  z-1   lg:flex lg:flex-row lg:items-center space-y-4 lg:space-y-0 lg:space-x-6 mt-4 lg:mt-0`}
         >
           <Link
             href="/"
