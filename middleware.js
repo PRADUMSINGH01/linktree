@@ -7,7 +7,7 @@ export default async function middleware(req) {
   const token = req.cookies.get("token")?.value;
 
   const isAuthPage = ["/login", "/register"].includes(req.nextUrl.pathname); // Auth pages
-  const isProtectedPage = ["/", "/dashboard", "/profile", "/settings"].includes(
+  const isProtectedPage = ["/", "/Dashboard", "/profile", "/settings"].includes(
     req.nextUrl.pathname
   ); // Protected pages
 

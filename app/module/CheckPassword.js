@@ -52,6 +52,6 @@ export async function CheckPassword(email, password) {
       return { success: false, msg: "password is incorrect" };
     }
   } catch (error) {
-    throw new console.error(error);
+    return {success:false ,msg:"Internal serever issue"}
   }
 }
