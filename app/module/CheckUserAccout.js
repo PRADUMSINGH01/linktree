@@ -1,37 +1,40 @@
 "use server";
 
-import { firestore } from "./firebase";
+import { db } from "./firebaseClient";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
-export async function CheckUserAccount(email) {
-  if (!email) {
-    return { success: false, msg: "No data submitted. Please try again... " };
-  }
-
+export async function CheckUserAccount(res) {
   try {
-    let res = await firestore
-      .collection("Users")
-      .where("email", "==", email)
-      .get();
-    const doc = res.docs[0];
-    if (!doc) {
+    // Extract email from the input
+    const { email } = res;
+
+    if (!email) {
+      return { success: false, msg: "No email provided. Please try again." };
+    }
+
+    // Create a reference to the Users collection and query for the email
+    const usersRef = collection(db, "Users");
+    const userQuery = query(usersRef, where("email", "==", email));
+    const querySnapshot = await getDocs(userQuery);
+
+    // Check if any documents match the query
+    if (querySnapshot.empty) {
       return {
         success: true,
-        msg: "there is no user with this Email Id .Please Make your account",
+        msg: "No user found with this email ID. Please create an account.",
       };
     }
-    if (!res) {
-      return {
-        success: true,
-        msg: "User Not Found.You can create New account ",
-      };
-    } else {
-      return {
-        success: false,
-        msg: "You have Account with this mail Id.Please try with different email Id ... ",
-      };
-    }
+
+    // User found
+    return {
+      success: false,
+      msg: "An account exists with this email ID. Please try a different email.",
+    };
   } catch (error) {
-    console.error(error); // Log the error for debugging
-    throw error; // Rethrow the error for external handling
+    console.error("Error checking user account:", error);
+    return {
+      success: false,
+      msg: "An error occurred while checking the account. Please try again later.",
+    };
   }
 }

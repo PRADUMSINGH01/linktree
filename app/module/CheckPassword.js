@@ -1,19 +1,20 @@
 "use server";
 
 import bcrypt from "bcrypt";
-import { firestore } from "./firebase";
+//import { firestore } from "./firebase";
+import { db } from "./firebaseClient";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 export async function CheckPassword(email, password) {
   try {
     const secret = process.env.NEXT_SECRET;
 
     const cook = cookies();
-    const res = await firestore
-      .collection("Users")
-      .where("email", "==", email)
-      .get();
+    const usersRef = collection(db, "Users");
+    const userQuery = query(usersRef, where("email", "==", email));
+    const res = await getDocs(userQuery);
 
     if (!res || res.empty) {
       return {
@@ -38,27 +39,32 @@ export async function CheckPassword(email, password) {
     const isPasswordVeri = await bcrypt.compare(password, userData.password);
 
     if (isPasswordVeri) {
-      if (!userData?.id) {
+      if (!userData?.email) {
         throw new Error("User ID is missing. Cannot generate token.");
       }
 
-      if (!userData?.id) {
+      if (!userData?.email) {
         throw new Error("User ID is missing. Cannot generate token.");
       }
-      const token = jwt.sign({ data: userData.id }, secret, {
+      const token = jwt.sign({ data: userData.email }, secret, {
         expiresIn: "1h",
       });
 
       if (!token) {
         throw new Error("Token is missing. Cannot set cookie.");
+      } else {
+        await cook.set({
+          name: "token",
+          value: token,
+          httpOnly: true,
+          secure: true,
+          path: "/",
+          sameSite: "Strict",
+          maxAge: 3600, // 1 hour
+        });
+
+        console.log("Cookie set successfully.");
       }
-      cook.set({
-        name: "token",
-        value: token,
-        httpOnly: true,
-        path: "/",
-        maxAge: 7 * 24 * 60 * 60,
-      });
 
       return { success: true, msg: "Password verified" };
     } else {
