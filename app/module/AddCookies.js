@@ -2,9 +2,9 @@
 import { cookies } from "next/headers";
 export async function AddCookies(token) {
   const res = await token;
-  const cook = cookies();
+  const cook = await cookies();
   if (res) {
-    await cook.set({
+    cook.set({
       name: "token",
       value: token,
       httpOnly: true,
@@ -14,7 +14,7 @@ export async function AddCookies(token) {
       maxAge: 3600, // 1 hour
     });
 
-    return { success: true, msg: "cookies added " };
+    return { success: true, msg: "Login Successfully " };
   } else {
     return { success: false, msg: "Cookies not added " };
   }

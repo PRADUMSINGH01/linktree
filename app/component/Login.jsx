@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { CheckPassword } from "../module/CheckPassword";
+import { AddCookies } from "../module/AddCookies";
 
 export default function Login() {
   const [alert, setalert] = useState("");
@@ -15,10 +16,10 @@ export default function Login() {
   }
 
   async function HandleSubmit() {
-    const isPasswordVerified = await CheckPassword(login.email, login.password);
-    if (isPasswordVerified) {
-      setalert(isPasswordVerified.msg);
-
+    const isPasswordVerified = await CheckPassword(login);
+    if (isPasswordVerified.success == true && isPasswordVerified.token) {
+      const final = await AddCookies(isPasswordVerified.token);
+      setalert(final.msg);
       setTimeout(() => {
         window.location.href = "/";
       }, 2000);

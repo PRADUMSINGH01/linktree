@@ -1,18 +1,17 @@
 "use server";
 
 import bcrypt from "bcrypt";
-//import { firestore } from "./firebase";
 import { db } from "./firebaseClient";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
+
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { AddCookies } from "./AddCookies";
 
-export async function CheckPassword(email, password) {
+export async function CheckPassword(req) {
   try {
     const secret = process.env.NEXT_SECRET;
 
-    const cook = cookies();
+    const { email, password } = req;
     const usersRef = collection(db, "Users");
     const userQuery = query(usersRef, where("email", "==", email));
     const res = await getDocs(userQuery);
@@ -51,18 +50,7 @@ export async function CheckPassword(email, password) {
         expiresIn: "1h",
       });
 
-      if (!token) {
-        throw new Error("Token is missing. Cannot set cookie.");
-      } else {
-        const res = await AddCookies(token);
-        if (res.success === true) {
-          console.log(res.msg);
-        } else {
-          console.log(res.msg);
-        }
-      }
-
-      return { success: true, msg: "Password verified" };
+      return { success: true, token: token, msg: "token generated" };
     } else {
       return { success: false, msg: "Password is incorrect" };
     }
