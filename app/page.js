@@ -5,7 +5,6 @@ import Features from "./component/Feature";
 import Footer from "./component/Footer";
 import Faq from "./component/FandQ";
 
-import { useEffect } from "react";
 export default function Home() {
   return (
     <>

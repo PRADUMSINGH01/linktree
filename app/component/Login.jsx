@@ -20,7 +20,10 @@ export default function Login() {
     const isPasswordVerified = await CheckPassword(login);
 
     if (isPasswordVerified.success && isPasswordVerified.token) {
-      const final = await AddCookies(isPasswordVerified.token);
+      const final = await AddCookies(
+        isPasswordVerified.token,
+        isPasswordVerified.userId
+      );
       setAlert(final.msg);
       setTimeout(() => {
         window.location.href = "/";

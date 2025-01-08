@@ -1,28 +1,35 @@
-import { firestore } from "./firebase";
+"use server";
+import { db } from "./firebaseClient";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { cookies } from "next/headers";
 
-export default async function FETCHUSER(email) {
-  if (!email) {
-    throw new Error("Email is required to fetch user details.");
+export async function FETCHUSER() {
+  const cook = await cookies();
+  const Name = cook.get("UserId")?.value; // Retrieve cookie value
+
+  if (!Name) {
+    throw new Error("UserId cookie is required to fetch user details.");
   }
 
   try {
-    const res = await firestore
-      .collection("Users")
-      .where("email", "==", email)
-      .get();
+    const usersRef = collection(db, "Users");
+    const userQuery = query(usersRef, where("name", "==", Name));
+    const res = await getDocs(userQuery);
 
     if (res.empty) {
-      return []; // Return an empty array if no matching users are found
+      console.log("No matching user found.");
+      return { userData: null };
     }
 
-    const userDetails = res.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-
-    return userDetails; // Always return an object/array
+    const doc = res.docs[0];
+    console.log("_______" + doc.id);
+    // Get the first matched document
+    const userData = doc.data(); // Extract document data
+    //console.log("Fetched User Data:", userData.Id);
+    console.log(userData);
+    return { id: doc.id, links: userData.links }; // Return user data as an object
   } catch (error) {
-    console.error("Error fetching user details:", error);
+    console.error("Error fetching user details:", error.message);
     throw new Error("Failed to fetch user details.");
   }
 }

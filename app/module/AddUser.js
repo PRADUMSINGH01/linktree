@@ -15,8 +15,10 @@ export async function AddData(name, email, password) {
       name,
       email,
       password,
+      Id: Math.random(),
     });
     if (docRef.id) {
+      // console.log(docRef.id);
       return { success: true, msg: "Data Added successfully " };
     } else {
       return { success: false, msg: "Data Not Added. Please try again " };

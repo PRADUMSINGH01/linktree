@@ -5,7 +5,7 @@ import { db } from "./firebaseClient";
 import jwt from "jsonwebtoken";
 
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { AddCookies } from "./AddCookies";
+;
 
 export async function CheckPassword(req) {
   try {
@@ -50,7 +50,12 @@ export async function CheckPassword(req) {
         expiresIn: "1h",
       });
 
-      return { success: true, token: token, msg: "token generated" };
+      return {
+        success: true,
+        token: token,
+        userId: userData.name,
+        msg: "token generated",
+      };
     } else {
       return { success: false, msg: "Password is incorrect" };
     }
