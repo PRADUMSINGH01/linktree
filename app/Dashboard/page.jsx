@@ -138,7 +138,7 @@ const LinkDashboard = () => {
       </div>
       <h2 className="text-2xl font-semibold text-gray-700 mt-10">Preview</h2>
       <div className="mt-6 w-full max-w-md bg-white shadow-lg rounded-lg p-6 space-y-4">
-        {links
+        {/*links
           ? links.map((link, index) => (
               <a
                 key={index}
@@ -156,7 +156,7 @@ const LinkDashboard = () => {
                 {link.Url || "Untitled Link"}
               </a>
             ))
-          : ""}
+          : ""*/}
       </div>
     </div>
   );

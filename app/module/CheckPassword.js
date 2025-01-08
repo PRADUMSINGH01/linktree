@@ -5,8 +5,6 @@ import { db } from "./firebaseClient";
 import jwt from "jsonwebtoken";
 
 import { collection, query, where, getDocs } from "firebase/firestore";
-;
-
 export async function CheckPassword(req) {
   try {
     const secret = process.env.NEXT_SECRET;
@@ -53,7 +51,7 @@ export async function CheckPassword(req) {
       return {
         success: true,
         token: token,
-        userId: userData.name,
+        userId: doc.id,
         msg: "token generated",
       };
     } else {

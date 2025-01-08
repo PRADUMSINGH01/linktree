@@ -6,7 +6,8 @@ import HashPassword from "../module/HashPassword";
 export default function Register() {
   const [alert, setalert] = useState("");
   const [formData, setformData] = useState({
-    name: "",
+    Fname: "",
+    Lname: "",
     email: "",
     password: "",
   });
@@ -23,7 +24,8 @@ export default function Register() {
       if (IsCheckUserAccount.success === true) {
         const hashPassword = await HashPassword(formData.password);
         const Isdataadded = await AddData(
-          formData.name,
+          formData.Fname,
+          formData.Lname,
           formData.email,
           hashPassword
         );
@@ -59,14 +61,25 @@ export default function Register() {
         <form action={Submit}>
           <div className="mb-4">
             <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
-              Name
+              First Name
             </label>
             <input
               type="text"
-              name="name"
+              name="Fname"
               className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your name"
-              value={formData.name}
+              value={formData.Fname}
+              onChange={(e) => HandleChange(e)}
+            />
+            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
+              Last Name
+            </label>
+            <input
+              type="text"
+              name="Lname"
+              className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your name"
+              value={formData.Lname}
               onChange={(e) => HandleChange(e)}
             />
           </div>
