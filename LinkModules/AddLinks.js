@@ -27,7 +27,10 @@ export async function AddLink(link, UserId) {
   });
 
   console.log("Document added successfully!");
-  return;
+  return {
+    success: true,
+    msg: "Link Added .",
+  };
   if (!link || typeof link !== "object" || Array.isArray(link)) {
     return {
       success: false,

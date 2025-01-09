@@ -1,22 +1,29 @@
+"use client";
+import { useState, useEffect } from "react";
 import AboutProfile from "@/app/component/ProfileLins/AboutProfile";
 import Avatar from "@/app/component/ProfileLins/Avatar";
 import Links from "@/app/component/ProfileLins/LinksUI";
 import SocailMediaIcons from "@/app/component/ProfileLins/SocialMedia";
+/*
+ */
+function Preview({ dataa }) {
+  const [data, setdata] = useState([]);
+  console.log("dadaaa----" + dataa);
 
-import { FETCHLINK } from "@/LinkModules/FetchLink";
-export default async function page({ params }) {
-  const search = await params;
-  const StrgSearch = String(search.UserName);
-  const result = await FETCHLINK(StrgSearch);
-  const data = result.links;
-  if (!data) {
-    return <> There is No Page . Please Check Your Url </>;
-  }
+  useEffect(() => {
+    async function storedata(data) {
+      console.log("ddd----" + data);
+      const res = setdata(...data);
+      return res;
+    }
+    storedata(dataa);
+    return setdata([]);
+  }, []);
   return (
     <div className="bg-gradient-to-r from-black via-[#ecc69d] to-[#ebd5bb] h-full w-full p-4 md:p-2 lg:p-2 ">
-      <Avatar Profile={"/"} />
       <AboutProfile Bio={"Gamer || Twitch "} />
       <div className="w-full flex justify-center items-center ">
+        <Avatar Profile={"/"} />
         <SocailMediaIcons />
       </div>
       {data ? (
@@ -36,7 +43,9 @@ export default async function page({ params }) {
         ))
       ) : (
         <>Loading</>
-      )}
+      )}{" "}
     </div>
   );
 }
+
+export default Preview;

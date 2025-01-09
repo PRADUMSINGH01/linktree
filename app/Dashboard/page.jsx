@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { FETCHUSER } from "../module/FechUser";
 import { AddLink } from "@/LinkModules/AddLinks";
+import Preview from "@/LinkModules/Preview";
+
 const LinkDashboard = () => {
   const [links, setLinks] = useState([]);
 
@@ -9,11 +11,11 @@ const LinkDashboard = () => {
   useEffect(() => {
     const fetchLinks = async () => {
       const docSnap = await FETCHUSER();
-      // console.log(docSnap.id);
       if (docSnap) {
         setLinks(docSnap.links);
-        console.log(docSnap.links);
         setuserId(docSnap.id);
+      } else {
+        return [];
       }
     };
     fetchLinks();
@@ -38,7 +40,13 @@ const LinkDashboard = () => {
   const handleAddLink = () => {
     setLinks([
       ...links,
-      { url: "", title: "", color: "#000000", font: "Arial", style: "normal" },
+      {
+        url: "",
+        title: "",
+        color: "#000000",
+        font: "Arial",
+        style: "normal",
+      },
     ]);
   };
 
@@ -137,12 +145,14 @@ const LinkDashboard = () => {
         </button>
       </div>
       <h2 className="text-2xl font-semibold text-gray-700 mt-10">Preview</h2>
+      {links ? <Preview dataa={links} /> : "Loading"}
+
       <div className="mt-6 w-full max-w-md bg-white shadow-lg rounded-lg p-6 space-y-4">
-        {/*links
+        {links
           ? links.map((link, index) => (
               <a
                 key={index}
-                href={link.Url}
+                href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block p-2 rounded-lg"
@@ -153,10 +163,10 @@ const LinkDashboard = () => {
                   fontStyle: link.style === "italic" ? "italic" : "normal",
                 }}
               >
-                {link.Url || "Untitled Link"}
+                {link.title || "Untitled Link"}
               </a>
             ))
-          : ""*/}
+          : ""}
       </div>
     </div>
   );

@@ -5,23 +5,19 @@ import { cookies } from "next/headers";
 
 export async function FETCHUSER() {
   const cook = await cookies();
-  const Name = cook.get("UserId")?.value;
+  const Name = String(cook.get("UserId")?.value);
   console.log(Name);
   if (!Name) {
     throw new Error("UserId cookie is required to fetch user details.");
   }
-
   try {
     const usersRef = collection(db, "Users");
-    const userQuery = query(
-      usersRef,
-      where("email", "==", "hs947518@gmail.com")
-    );
+    const userQuery = query(usersRef, Name);
     const res = await getDocs(userQuery);
 
     if (res.empty) {
       console.log("No matching user found.");
-      return { userData: null };
+      return { userData: [] };
     }
 
     const doc = res.docs[0];
