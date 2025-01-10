@@ -23,7 +23,7 @@ export async function FETCHLINK(Name) {
     // Get the first matched document
     const userData = doc.data(); // Extract document data
     //console.log("Fetched User Data:", userData.Id);
-    console.log(userData);
+   // console.log(userData);
     return { links: userData.links }; // Return user data as an object
   } catch (error) {
     console.error("Error fetching user details:", error.message);

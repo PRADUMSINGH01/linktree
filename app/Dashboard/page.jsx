@@ -46,6 +46,7 @@ const LinkDashboard = () => {
         color: "#000000",
         font: "Arial",
         style: "normal",
+        bio: "",
       },
     ]);
   };
@@ -73,6 +74,13 @@ const LinkDashboard = () => {
             className="p-4 border border-gray-200 rounded-lg space-y-4"
           >
             <div className="flex space-x-4">
+              <input
+                type="text"
+                placeholder="Bio"
+                value={link.bio}
+                onChange={(e) => handleEditLink(index, "bio", e.target.value)}
+                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+              />
               <input
                 type="text"
                 placeholder="URL"

@@ -12,6 +12,11 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+
+      fontFamily: {
+        basic: ["Bebas Neue"],
+        stander: ["Rubik Vinyl"],
+      },
     },
   },
   plugins: [],
