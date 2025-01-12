@@ -2,17 +2,25 @@
 import React, { useState, useEffect } from "react";
 import { FETCHUSER } from "../module/FechUser";
 import { AddLink } from "@/LinkModules/AddLinks";
-import Preview from "@/LinkModules/Preview";
-
+import { ChooseTheme } from "../module/ChooseTheme";
+import Link from "next/link";
+import { uploadImage } from "@/LinkModules/UploadImage";
+import { AddLinktolinks } from "@/LinkModules/AddlinktoLinks";
 const LinkDashboard = () => {
-  const [links, setLinks] = useState([]);
+  const [links, setLinks] = useState({
+    link: [{ url: "", title: "" }], // Merged `link` into `links`
+    color: "#000000",
+    font: "Arial",
+    style: "normal",
+    bio: "",
+    theme: "Basic",
+  });
 
   const [userID, setuserId] = useState("");
   useEffect(() => {
     const fetchLinks = async () => {
       const docSnap = await FETCHUSER();
       if (docSnap) {
-        setLinks(docSnap.links);
         setuserId(docSnap.id);
       } else {
         return [];
@@ -21,7 +29,6 @@ const LinkDashboard = () => {
     fetchLinks();
   }, []);
 
-  //console.log(links, userID);
   const saveLinks = async () => {
     const IslinkAdded = await AddLink(links, userID);
     if (IslinkAdded.success === true) {
@@ -31,151 +38,129 @@ const LinkDashboard = () => {
     }
   };
 
-  const handleEditLink = (index, key, value) => {
-    const updatedLinks = [...links];
-    updatedLinks[index][key] = value;
-    setLinks(updatedLinks);
+  const handleAddLink = (e) => {
+    const { name, value } = e.target;
+    setLinks((items) => ({ ...items, [name]: value }));
+  };
+  const AddLinksss = async () => {
+    const IslinkAdded = await AddLinktolinks(links.link, userID);
+    if (IslinkAdded.success === true) {
+      alert(IslinkAdded.msg);
+    } else {
+      alert(IslinkAdded.msg);
+    }
+  };
+  const AddLinks = () => {
+    setLinks((prevLinks) => ({
+      ...prevLinks,
+      link: [...prevLinks.link, { url: "", title: "" }],
+    }));
   };
 
-  const handleAddLink = () => {
-    setLinks([
-      ...links,
-      {
-        url: "",
-        title: "",
-        color: "#000000",
-        font: "Arial",
-        style: "normal",
-        bio: "",
-      },
-    ]);
+  const HandleLink = (index, e) => {
+    const { name, value } = e.target;
+    setLinks((prevLinks) => {
+      const updatedLinks = [...prevLinks.link];
+      updatedLinks[index] = { ...updatedLinks[index], [name]: value };
+      return { ...prevLinks, link: updatedLinks };
+    });
   };
-
   const handleRemoveLink = (index) => {
-    const updatedLinks = links.filter((_, i) => i !== index);
-    setLinks(updatedLinks);
+    setLinks((prevLinks) => {
+      const updatedLinks = prevLinks.link.filter((_, i) => i !== index);
+      return { ...prevLinks, link: updatedLinks };
+    });
   };
-
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">
-        Customize Your Links
-      </h1>
+      <p className="bg-yellow-500 text-left p-1 m-5 w-full font-basic">
+        <Link href={"/Themes"}>1.Choose your theme</Link>
+      </p>
+      <label className="flex items-center space-x-2">
+        <span>Theme:</span>
+        <select
+          value={links.theme}
+          name="theme"
+          onChange={(e) => handleAddLink(e)}
+          className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+        >
+          <option>Basic</option>
+          <option>Stander</option>
+          <option>ocen </option>
+        </select>
+      </label>{" "}
+      <ChooseTheme theme={links.theme} links={links.link} />
+      <p className="bg-yellow-500 text-left p-1 m-5 w-full font-basic">
+        <Link href={"/AddLinks"}>4. Add your Profile </Link>
+      </p>
+      <input
+        type="file"
+        placeholder="Bio"
+        name="Bio"
+        id="imageUpload"
+        value={links.bio}
+        onChange={() => uploadImage()}
+        className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+      />
+      <p className="bg-yellow-500 text-left p-1 m-5 w-full font-basic">
+        <Link href={"/AddLinks"}>4. Add your Links </Link>
+      </p>
       <button
-        onClick={handleAddLink}
+        onClick={AddLinks}
         className="mb-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
       >
         Add New Link
       </button>
       <div className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-6 space-y-6">
-        {links.map((link, index) => (
-          <div
-            key={index}
-            className="p-4 border border-gray-200 rounded-lg space-y-4"
-          >
-            <div className="flex space-x-4">
-              <input
-                type="text"
-                placeholder="Bio"
-                value={link.bio}
-                onChange={(e) => handleEditLink(index, "bio", e.target.value)}
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <input
-                type="text"
-                placeholder="URL"
-                value={link.url}
-                onChange={(e) => handleEditLink(index, "url", e.target.value)}
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-              <input
-                type="text"
-                placeholder="Title"
-                value={link.title}
-                onChange={(e) => handleEditLink(index, "title", e.target.value)}
-                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-              />
-            </div>
-            <div className="flex space-x-4 items-center">
-              <label className="flex items-center space-x-2">
-                <span>Color:</span>
+        <div className="p-4 border border-gray-200 rounded-lg space-y-4">
+          {links.link.map((items, index) => (
+            <div key={index}>
+              <div className="flex space-x-4">
                 <input
-                  type="color"
-                  value={link.color}
-                  onChange={(e) =>
-                    handleEditLink(index, "color", e.target.value)
-                  }
-                  className="w-10 h-10 p-0 border rounded-md focus:outline-none"
+                  type="text"
+                  name="url"
+                  placeholder="URL"
+                  value={items.url}
+                  onChange={(e) => HandleLink(index, e)}
+                  className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
-              </label>
-              <label className="flex items-center space-x-2">
-                <span>Font:</span>
-                <select
-                  value={link.font}
-                  onChange={(e) =>
-                    handleEditLink(index, "font", e.target.value)
-                  }
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  value={items.title}
+                  onChange={(e) => HandleLink(index, e)}
+                  className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
+
+              <div className="flex space-x-4 items-center">
+                <button
+                  onClick={() => handleRemoveLink(index)}
+                  className="text-red-600 hover:text-red-800"
                 >
-                  <option>Arial</option>
-                  <option>Roboto</option>
-                  <option>Verdana</option>
-                </select>
-              </label>
-              <label className="flex items-center space-x-2">
-                <span>Style:</span>
-                <select
-                  value={link.style}
-                  onChange={(e) =>
-                    handleEditLink(index, "style", e.target.value)
-                  }
-                  className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                >
-                  <option value="normal">Normal</option>
-                  <option value="italic">Italic</option>
-                  <option value="bold">Bold</option>
-                </select>
-              </label>
-              <button
-                onClick={() => handleRemoveLink(index)}
-                className="text-red-600 hover:text-red-800"
-              >
-                Remove
-              </button>
+                  Remove
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        <p className=" w-full flex flex-row justify-cener  text-red-500 text-sm opacity-80">
+          Note: On save Change only link will be added
+        </p>
         <button
-          onClick={saveLinks}
-          className="w-full py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+          onClick={AddLinksss}
+          className="w-1/2 ml-[25%] py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
         >
           Save Changes
         </button>
       </div>
-      <h2 className="text-2xl font-semibold text-gray-700 mt-10">Preview</h2>
-      {links ? <Preview dataa={links} /> : "Loading"}
-
-      <div className="mt-6 w-full max-w-md bg-white shadow-lg rounded-lg p-6 space-y-4">
-        {links
-          ? links.map((link, index) => (
-              <a
-                key={index}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block p-2 rounded-lg"
-                style={{
-                  color: link.color,
-                  fontFamily: link.font,
-                  fontWeight: link.style === "bold" ? "bold" : "normal",
-                  fontStyle: link.style === "italic" ? "italic" : "normal",
-                }}
-              >
-                {link.title || "Untitled Link"}
-              </a>
-            ))
-          : ""}
-      </div>
+      <button
+        onClick={saveLinks}
+        className="w-1/2 py-2 bg-green-600 mt-10 text-white rounded-lg hover:bg-green-700"
+      >
+        Publish
+      </button>
     </div>
   );
 };

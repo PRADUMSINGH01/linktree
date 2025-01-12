@@ -10,20 +10,23 @@ import {
   collection,
 } from "firebase/firestore";
 
-export async function AddLink(link, UserId) {
+export async function AddLinktolinks(link, UserId) {
   const userIdString = String(UserId);
   // Ensure link is a valid object and not a nested array
 
   //const collectionName = "Users";
   // The new object to add to the `links` array
   const n = link;
+  // Reference to the document in Firestore
 
   const userDocRef = doc(db, "Users", userIdString);
 
   // Add the new object to the 'links' array
-  await updateDoc(userDocRef, {
-    links: n, // Adds the new object to the existing `links` array
-  });
+  for (const iterator of n) {
+    await updateDoc(userDocRef, {
+      [`links.link`]: arrayUnion(iterator), // Adds the new object to the existing `links` array
+    });
+  }
 
   console.log("Document added successfully!");
   return {
