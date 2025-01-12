@@ -18,7 +18,7 @@ export default function HeroSection() {
           </p>
           <div className="flex justify-center lg:justify-start space-x-4">
             <Link
-              href="/signup"
+              href="/Dashboard"
               className="px-6 py-3 bg-yellow-400 text-black rounded-full font-bold hover:bg-yellow-300"
             >
               Get Started

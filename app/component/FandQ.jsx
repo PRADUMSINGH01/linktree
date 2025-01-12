@@ -17,7 +17,7 @@ export default function Faq() {
   ];
 
   return (
-    <div className="min-h-screen py-8 px-4 bg-gray-100 dark:bg-gray-900 dark:text-gray-100">
+    <div className="min-h-screen py-8 px-4 bg-gray-100 dark:bg-gray-900 dark:text-gray-100 bg-gradient-to-br from-purple-500 to-blue-600 ">
       <header className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">FAQ</h1>
       </header>
@@ -25,10 +25,10 @@ export default function Faq() {
         {faqs.map((faq, index) => (
           <div
             key={index}
-            className="p-4 border rounded shadow bg-white dark:bg-gray-800"
+            className="p-4 border rounded-xl shadow bg-white/10 dark:bg-gray-800"
           >
             <h2 className="font-semibold text-lg">{faq.question}</h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
+            <p className="mt-2 text-white/50 dark:text-gray-300">
               {faq.answer}
             </p>
           </div>

@@ -73,10 +73,10 @@ const LinkDashboard = () => {
   };
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
-      <p className="bg-yellow-500 text-left p-1 m-5 w-full font-basic">
-        <Link href={"/Themes"}>1.Choose your theme</Link>
-      </p>
-      <label className="flex items-center space-x-2">
+      <button className="mb-6 px-6 py-2 bg-yellow-500 mt-2 text-black font-basic rounded-lg hover:bg-yellow-700">
+        Choose your theme
+      </button>
+      <label className="flex items-center space-x-2 shadow-xl bg-white/10 p-2">
         <span>Theme:</span>
         <select
           value={links.theme}
@@ -90,7 +90,7 @@ const LinkDashboard = () => {
         </select>
       </label>{" "}
       <ChooseTheme theme={links.theme} links={links.link} />
-      <p className="bg-yellow-500 text-left p-1 m-5 w-full font-basic">
+      <p className="bg-yellow-500 text-left p-2 m-5 w-[10rem] rounded-xl font-basic">
         <Link href={"/AddLinks"}>4. Add your Profile </Link>
       </p>
       <input
@@ -102,16 +102,13 @@ const LinkDashboard = () => {
         onChange={() => uploadImage()}
         className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
-      <p className="bg-yellow-500 text-left p-1 m-5 w-full font-basic">
-        <Link href={"/AddLinks"}>4. Add your Links </Link>
-      </p>
       <button
         onClick={AddLinks}
-        className="mb-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+        className="mb-6 px-6 py-2 bg-yellow-500 mt-2 text-black font-basic text-left w-[10rem] rounded-lg hover:bg-yellow-700"
       >
         Add New Link
       </button>
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-lg p-6 space-y-6">
+      <div className="w-full max-w-3xl bg-white/50 shadow-lg rounded-lg p-6 space-y-6">
         <div className="p-4 border border-gray-200 rounded-lg space-y-4">
           {links.link.map((items, index) => (
             <div key={index}>
@@ -122,7 +119,7 @@ const LinkDashboard = () => {
                   placeholder="URL"
                   value={items.url}
                   onChange={(e) => HandleLink(index, e)}
-                  className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 />
                 <input
                   type="text"
@@ -130,7 +127,7 @@ const LinkDashboard = () => {
                   placeholder="Title"
                   value={items.title}
                   onChange={(e) => HandleLink(index, e)}
-                  className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500"
                 />
               </div>
 

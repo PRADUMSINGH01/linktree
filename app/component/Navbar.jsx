@@ -12,14 +12,14 @@ export default function Navbar() {
   const handleMenuToggle = () => setMenuOpen((prev) => !prev);
 
   return (
-    <header className="bg-white dark:bg-gray-900 shadow-md ">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center ">
+    <header className=" bg-white/10 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-200  dark:bg-gray-900 shadow-2xl shadow-gray-300 border w-full rouned-xl md:w-full ">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center  font-basic text-2xl ">
         {/* Logo */}
         <Link
           href="/"
           className="text-xl font-bold text-gray-900 dark:text-white"
         >
-          MyApp
+          PageLink
         </Link>
 
         {/* Menu Toggle (Mobile) */}
