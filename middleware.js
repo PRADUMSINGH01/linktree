@@ -17,7 +17,6 @@ export async function middleware(req) {
   } catch (err) {
     console.error("Invalid token on auth route:", err);
     const response = NextResponse.next();
-    response.cookies.set("token", "", { maxAge: -1 }); // Clear token
     return response;
   }
 }
