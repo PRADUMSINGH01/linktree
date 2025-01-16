@@ -1,59 +1,91 @@
-import Image from "next/image";
+import React from "react";
+import {
+  FaLink,
+  FaPoll,
+  FaChartLine,
+  FaCogs,
+  FaShareAlt,
+  FaGoogle,
+} from "react-icons/fa";
+import { motion } from "framer-motion";
 
-export default function Features() {
+const features = [
+  {
+    icon: <FaLink className="text-blue-500 text-3xl" />,
+    title: "Customizable Link Pages",
+    description:
+      "Create personalized link pages to share all your content from one place.",
+  },
+  {
+    icon: <FaGoogle className="text-green-500 text-3xl" />,
+    title: "Google Forms Integration",
+    description:
+      "Easily embed Google Forms to collect data and responses seamlessly.",
+  },
+  {
+    icon: <FaPoll className="text-purple-500 text-3xl" />,
+    title: "Polls and Surveys",
+    description:
+      "Add interactive polls and surveys to engage your audience directly.",
+  },
+  {
+    icon: <FaChartLine className="text-orange-500 text-3xl" />,
+    title: "Advanced Analytics",
+    description:
+      "Track clicks, views, and engagement with real-time analytics.",
+  },
+  {
+    icon: <FaShareAlt className="text-pink-500 text-3xl" />,
+    title: "Social Media Sharing",
+    description:
+      "Share your link pages across multiple social platforms with one click.",
+  },
+  {
+    icon: <FaCogs className="text-yellow-500 text-3xl" />,
+    title: "Customization & Branding",
+    description:
+      "Fully customize your page with themes, fonts, and custom domain support.",
+  },
+];
+
+const animationVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.2, duration: 0.6, type: "spring" },
+  }),
+};
+
+const Features = () => {
   return (
-    <section className="py-20 dark:bg-black">
-      <div className="container mx-auto px-6">
-        <h2 className="text-4xl dark:text-yellow-500 font-bold text-center mb-10">
-          Why Choose <span className="text-blue-600">YourSaaS</span>
+    <section className="bg-gray-50 py-16 font-basic">
+      <div className="container mx-auto px-6 text-center">
+        <h2 className="text-4xl font-extrabold text-gray-800 mb-8">
+          Powerful Features for Every User
         </h2>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 text-center">
-            <Image
-              src="/svgs/sharing.svg"
-              alt="Share Links"
-              width={100}
-              height={100}
-              className="mx-auto"
-            />
-            <h3 className="text-xl font-semibold  mt-4">Easy Sharing</h3>
-            <p className="text-gray-700 dark:text-gray-200">
-              Share your personalized link with one URL and connect with your
-              audience instantly.
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 text-center">
-            <Image
-              src="/svgs/analytics.svg"
-              alt="Analytics"
-              width={100}
-              height={100}
-              className="mx-auto"
-            />
-            <h3 className="text-xl font-semibold mt-4">Advanced Analytics</h3>
-            <p className="text-gray-700 dark:text-gray-200">
-              Track clicks and engagement with detailed analytics to grow your
-              audience.
-            </p>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 text-center">
-            <Image
-              src="/svgs/p.svg"
-              alt="Customize"
-              width={100}
-              height={100}
-              className="mx-auto"
-            />
-            <h3 className="text-xl font-semibold mt-4">Customizable</h3>
-            <p className="text-gray-700 dark:text-gray-200">
-              Personalize your page with themes, branding, and unique layouts.
-            </p>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300"
+              custom={index}
+              initial="hidden"
+              whileInView="visible"
+              variants={animationVariants}
+              viewport={{ once: true }}
+            >
+              <div className="flex justify-center mb-4">{feature.icon}</div>
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600">{feature.description}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default Features;
