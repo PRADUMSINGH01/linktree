@@ -11,9 +11,9 @@ export default function Home() {
   return (
     <div className="bg-white/50">
       <Navbar />
+
       <HeroSection />
       <LinkFeatureComponent />
-
       <Features />
       <Plan />
       <FAQ />

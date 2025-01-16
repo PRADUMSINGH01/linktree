@@ -11,7 +11,7 @@ export async function AddCookies(token, UserId) {
       secure: true,
       path: "/",
       sameSite: "Strict",
-      maxAge: 3600, // 1 hour
+      maxAge: 604800, // 7 days in seconds
     });
     cook.set({
       name: "UserId",
@@ -20,7 +20,7 @@ export async function AddCookies(token, UserId) {
       secure: true,
       path: "/",
       sameSite: "Strict",
-      maxAge: 3600, // 1 hour
+      maxAge: 604800, // 7 days in seconds
     });
 
     return { success: true, msg: "Login Successfully " };

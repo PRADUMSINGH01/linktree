@@ -29,7 +29,7 @@ export default function Navbar() {
   const handleMenuToggle = () => setMenuOpen((prev) => !prev);
 
   return (
-    <header className=" bg-white/10 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-200  dark:bg-gray-900 shadow-2xl shadow-gray-300 border w-full rouned-xl md:w-full ">
+    <header className=" bg-white/10  dark:bg-gray-900 shadow-2xl shadow-gray-300 w-full rouned-xl md:w-full ">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center  font-basic text-2xl ">
         {/* Logo */}
         <Link
@@ -41,7 +41,7 @@ export default function Navbar() {
 
         {/* Menu Toggle (Mobile) */}
         <button
-          className="lg:hidden text-gray-700 dark:text-gray-300"
+          className="lg:hidden text-gray-700 dark:text-gray-300 shadow-lg p-2 rounded-full"
           onClick={handleMenuToggle}
         >
           {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -55,7 +55,7 @@ export default function Navbar() {
         >
           <Link
             href="/"
-            className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+            className="text-gray-900  text-lg dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
           >
             Home
           </Link>
@@ -77,14 +77,8 @@ export default function Navbar() {
           ) : (
             <>
               <Link
-                href="/register"
-                className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
-              >
-                Register
-              </Link>
-              <Link
                 href="/login"
-                className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                className="text-gray-900 text-lg dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
               >
                 Login
               </Link>
@@ -95,7 +89,7 @@ export default function Navbar() {
         {/* Dark Mode Toggle */}
         <button
           onClick={toggleTheme}
-          className="ml-4 p-2 rounded-full bg-gray-200 dark:bg-gray-800"
+          className="ml-4 p-2 rounded-full  bg-white/50 shadow-lg dark:shadow-sm dark:bg-stone-900"
         >
           {isDarkMode ? (
             <FaSun className="text-yellow-400" size={20} />

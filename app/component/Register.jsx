@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AddData } from "../module/AddUser";
 import { CheckUserAccount } from "../module/CheckUserAccout";
 import HashPassword from "../module/HashPassword";
+import { sendOTP } from "../module/Mailer";
 export default function Register() {
   const [alert, setalert] = useState("");
   const [formData, setformData] = useState({

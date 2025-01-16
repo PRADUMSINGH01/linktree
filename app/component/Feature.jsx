@@ -59,7 +59,7 @@ const animationVariants = {
 
 const Features = () => {
   return (
-    <section className="bg-gray-50 py-16 font-basic">
+    <section className="bg-gray-50 py-16 font-basic ">
       <div className="container mx-auto px-6 text-center">
         <h2 className="text-4xl font-extrabold text-gray-800 mb-8">
           Powerful Features for Every User
