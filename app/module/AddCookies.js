@@ -6,7 +6,7 @@ export async function AddCookies(token, UserId) {
   if (res) {
     cook.set({
       name: "token",
-      value: token,
+      value: res,
       httpOnly: true,
       secure: true,
       path: "/",
