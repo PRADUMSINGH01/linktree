@@ -1,14 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useTheme } from "../ThemeContext";
 import { FaMoon, FaSun, FaBars, FaTimes } from "react-icons/fa";
-
+import { GetCookies } from "../module/GetCookies";
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useTheme();
+  const [cookies, setcookies] = useState(false);
 
+  useEffect(() => {
+    async function getCookies() {
+      const res = await GetCookies();
+      if (res) {
+        setcookies(true);
+      } else {
+        setcookies(false);
+      }
+    }
+
+    getCookies();
+
+    return () => {
+      setcookies(false);
+    };
+  }, []);
   const handleMenuToggle = () => setMenuOpen((prev) => !prev);
 
   return (
@@ -42,18 +59,37 @@ export default function Navbar() {
           >
             Home
           </Link>
-          <Link
-            href="/register"
-            className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
-          >
-            Register
-          </Link>
-          <Link
-            href="/login"
-            className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
-          >
-            Login
-          </Link>
+          {cookies ? (
+            <>
+              <Link
+                href="/Dashboard"
+                className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+              >
+                Dashboard
+              </Link>
+              <Link
+                href="/Logout"
+                className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+              >
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/register"
+                className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+              >
+                Register
+              </Link>
+              <Link
+                href="/login"
+                className="text-gray-900 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+              >
+                Login
+              </Link>
+            </>
+          )}
         </nav>
 
         {/* Dark Mode Toggle */}
