@@ -73,6 +73,9 @@ const LinkDashboard = () => {
   };
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6">
+      <h1 className=" p-3  text-center text-xl ">
+        Your Profile Link is /your full name{" "}
+      </h1>
       <button className="mb-6 px-6 py-2 bg-yellow-500 mt-2 text-black font-basic rounded-lg hover:bg-yellow-700">
         Choose your theme
       </button>
