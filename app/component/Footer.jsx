@@ -16,8 +16,8 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Company</h3>
             <p className="text-sm">
-              YourCompany is dedicated to providing the best services and
-              support for our customers. Contact us anytime!
+              PageLink is dedicated to providing the best services and support
+              for our customers. Contact us anytime!
             </p>
           </div>
 
@@ -63,16 +63,16 @@ const Footer = () => {
                   href="mailto:support@yourcompany.com"
                   className="hover:text-blue-500"
                 >
-                  support@yourcompany.com
+                  support@Pagelink.com
                 </a>
               </li>
               <li>
                 Phone:{" "}
                 <a href="tel:+123456789" className="hover:text-blue-500">
-                  +1 234 567 89
+                  +91 0000000000
                 </a>
               </li>
-              <li>Location: 123 Your Street, City, Country</li>
+              <li>Location: 123 Your location, City, Country</li>
             </ul>
           </div>
 
@@ -104,7 +104,7 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="mt-8 text-center text-sm text-gray-500">
-          &copy; {new Date().getFullYear()} YourCompany. All Rights Reserved.
+          &copy; {new Date().getFullYear()} Pagelink. All Rights Reserved.
         </div>
       </div>
     </footer>
